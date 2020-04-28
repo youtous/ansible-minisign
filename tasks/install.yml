@@ -1,0 +1,75 @@
+---
+- name: Install build requirements
+  become: yes
+  apt:
+    state: present
+    name:
+      - libsodium-dev
+      - cmake
+      - make
+      - pkg-config
+
+- name: Check if minisign is installed
+  command: "minisign -v"
+  register: minisign_present
+  ignore_errors: True
+
+- name: Create buid directory
+  tempfile:
+    state: directory
+    suffix: build
+  register: tmp_dir_build
+
+- name: Download minisign sources and verify checksum
+  get_url:
+    url: "{{ minisign_download_release_url }}"
+    dest: "{{ tmp_dir_build.path }}/minisign.tar.gz"
+    checksum: "sha512:{{ minisign_version_sha512sum }}"
+  when: minisign_present is failed
+
+- name: Download minisign sources and verify it with minisign
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+  when: minisign_present is not failed
+  with_items:
+    - { url: "{{ minisign_download_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz" }
+    - { url: "{{ minisign_download_signature_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz.minisig" }
+
+- name: Verify downloaded minisign using minisign
+  shell: >
+    minisign -Vm "{{ tmp_dir_build.path|quote }}/minisign.tar.gz" -P "{{ minisign_public_key|quote }}"
+  when: minisign_present is not failed
+
+- name: Extract downloaded files
+  unarchive:
+    src: "{{ tmp_dir_build.path }}/minisign.tar.gz"
+    dest: "{{ tmp_dir_build.path }}"
+    remote_src: yes
+
+- name: Build minisign | create build directory
+  file:
+    state: directory
+    path: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+
+- name: Build minisign | cmake build
+  command:
+    cmd: cmake .. -D BUILD_STATIC_EXECUTABLES=1
+    chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+
+- name: Build minisign | make
+  command:
+    cmd: make
+    chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+
+- name: Build minisign | make install
+  become: yes
+  command:
+    cmd: make install
+    chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+
+- name: Cleanup build directory
+  file:
+    state: absent
+    path: "{{ tmp_dir_build.path }}"
+...

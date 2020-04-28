@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: minisign
+  author: youtous
+  description: Install minisign from sources
+  company: none
+  license: MIT
+  min_ansible_version: 1.3
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
+    - minisign
+
+dependencies: []

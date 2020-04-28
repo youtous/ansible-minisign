@@ -8,11 +8,12 @@
 
 - name: Get minisign installed version
   shell: >
-    set pipefail &&
+    set -o pipefail &&
     minisign -v | awk '{print $2}'
   args:
     executable: /bin/bash
   when: minisign_present is not failed
+  changed_when: false
   register: minisign_current_version
 
 - name: Install minisign

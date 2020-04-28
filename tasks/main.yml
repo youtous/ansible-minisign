@@ -3,10 +3,12 @@
 - name: Check if minisign is installed
   command: "minisign -v"
   register: minisign_present
-  ignore_errors: True
+  ignore_errors: true
+  changed_when: false
 
 - name: Get minisign installed version
-  shell: >
+  shell: |
+    set -o pipefail
     minisign -v | awk '{print $2}'
   when: minisign_present is not failed
   register: minisign_current_version

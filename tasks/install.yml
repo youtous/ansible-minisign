@@ -12,7 +12,8 @@
 - name: Check if minisign is installed
   command: "minisign -v"
   register: minisign_present
-  ignore_errors: True
+  ignore_errors: true
+  changed_when: false
 
 - name: Create buid directory
   tempfile:
@@ -37,8 +38,7 @@
     - { url: "{{ minisign_download_signature_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz.minisig" }
 
 - name: Verify downloaded minisign using minisign
-  shell: >
-    minisign -Vm "{{ tmp_dir_build.path|quote }}/minisign.tar.gz" -P "{{ minisign_public_key|quote }}"
+  command: "minisign -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
   when: minisign_present is not failed
 
 - name: Extract downloaded files
@@ -56,17 +56,17 @@
   command:
     cmd: cmake .. -D BUILD_STATIC_EXECUTABLES=1
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+  changed_when: true
 
 - name: Build minisign | make
-  command:
-    cmd: make
+  make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | make install
   become: yes
-  command:
-    cmd: make install
+  make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+    target: install
 
 - name: Cleanup build directory
   file:

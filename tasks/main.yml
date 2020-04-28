@@ -8,7 +8,7 @@
 
 - name: Get minisign installed version
   shell: |
-    set -o pipefail
+    set pipefail &&
     minisign -v | awk '{print $2}'
   when: minisign_present is not failed
   register: minisign_current_version

@@ -1,6 +1,6 @@
 ---
 - name: Install build requirements
-  become: yes
+  become: True
   apt:
     state: present
     name:
@@ -63,7 +63,7 @@
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | make install
-  become: yes
+  become: True
   make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
     target: install

@@ -8,18 +8,18 @@ Installation from [ansible galaxy](https://galaxy.ansible.com/youtous/minisign):
 - name: Install minisign
   include_role: youtous.minisign
   vars:
-    minisign_version: "0.8" # optional
+    minisign_version: "0.10" # optional
 ```
 
 ### Usage
 
 ```yaml
-minisign_version: '0.8'
+minisign_version: '0.10'
 
 # sha512sum of the minisign archive, optional when minisign is already installed on the system
 # get it using:
-# $ minisign -Vm minisign-0.8.tar.gz -P 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3' && sha512sum minisign-0.8.tar.gz
-minisign_version_sha512sum: '79bf626d0c15e39ce3bdf53600038028c0b22904b648074bf516a9ea6962c9486c41244e80637a5fbac090cce1ed9b4b3d57b8a02632646e01b43aa413cd8bd9'
+# $ minisign -Vm minisign-0.10.tar.gz -P 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3' && sha512sum minisign-0.10.tar.gz
+minisign_version_sha512sum: 'dae9eb52888affd040da832820a5c9e236bbd3f4d320a29868cf85bfadd923b755eb736838c85fb93adac27168cbe856a1a3abdfb984d015b145df0e03df5b73'
 
 ```
 

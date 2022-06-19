@@ -1,8 +1,8 @@
 ---
-minisign_version: '0.9'
+minisign_version: '0.10'
 
 # sha512sum of the minisign archive, optional when minisign is already installed on the system
 # get it using:
-# $ minisign -Vm minisign-0.9.tar.gz -P 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3' && sha512sum minisign-0.9.tar.gz
-minisign_version_sha512sum: '1934ef5d4d35e1f19483814513059d799432d1d759666e5c087ff918e3a55916719276357bcf5bd2418f80e613d590405b74d3fa3cf60cb2f7d089af6fc06585'
+# $ minisign -Vm minisign-0.10.tar.gz -P 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3' && sha512sum minisign-0.10.tar.gz
+minisign_version_sha512sum: 'dae9eb52888affd040da832820a5c9e236bbd3f4d320a29868cf85bfadd923b755eb736838c85fb93adac27168cbe856a1a3abdfb984d015b145df0e03df5b73'
 ...

@@ -1,6 +1,6 @@
 ---
 - name: Install build requirements
-  become: True
+  become: true
   apt:
     state: present
     name:
@@ -45,7 +45,7 @@
   unarchive:
     src: "{{ tmp_dir_build.path }}/minisign.tar.gz"
     dest: "{{ tmp_dir_build.path }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Build minisign | create build directory
   file:
@@ -63,7 +63,7 @@
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | make install
-  become: True
+  become: true
   make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
     target: install

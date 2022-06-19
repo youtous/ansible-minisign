@@ -16,22 +16,24 @@
   changed_when: false
 
 - name: Create buid directory
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
     suffix: build
   register: tmp_dir_build
 
 - name: Download minisign sources and verify checksum
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ minisign_download_release_url }}"
     dest: "{{ tmp_dir_build.path }}/minisign.tar.gz"
     checksum: "sha512:{{ minisign_version_sha512sum }}"
+    mode: u=rw,g=,o=
   when: minisign_present is failed
 
 - name: Download minisign sources and verify it with minisign
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
+    mode: u=rw,g=,o=
   when: minisign_present is not failed
   with_items:
     - { url: "{{ minisign_download_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz" }
@@ -42,7 +44,7 @@
   when: minisign_present is not failed
 
 - name: Extract downloaded files
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ tmp_dir_build.path }}/minisign.tar.gz"
     dest: "{{ tmp_dir_build.path }}"
     remote_src: true
@@ -51,6 +53,7 @@
   ansible.builtin.file:
     state: directory
     path: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
+    mode: u=rwx,g=,o=
 
 - name: Build minisign | cmake build
   ansible.builtin.command:

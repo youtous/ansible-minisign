@@ -48,7 +48,7 @@
     remote_src: true
 
 - name: Build minisign | create build directory
-  file:
+  ansible.builtin.file:
     state: directory
     path: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
@@ -69,7 +69,7 @@
     target: install
 
 - name: Cleanup build directory
-  file:
+  ansible.builtin.file:
     state: absent
     path: "{{ tmp_dir_build.path }}"
 ...

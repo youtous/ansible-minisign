@@ -10,7 +10,7 @@
       - pkg-config
 
 - name: Check if minisign is installed
-  command: "minisign -v"
+  ansible.builtin.command: "minisign -v"
   register: minisign_present
   ignore_errors: true
   changed_when: false
@@ -38,7 +38,7 @@
     - { url: "{{ minisign_download_signature_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz.minisig" }
 
 - name: Verify downloaded minisign using minisign
-  command: "minisign -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
+  ansible.builtin.command: "minisign -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
   when: minisign_present is not failed
 
 - name: Extract downloaded files
@@ -53,7 +53,7 @@
     path: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | cmake build
-  command:
+  ansible.builtin.command:
     cmd: cmake .. -D BUILD_STATIC_EXECUTABLES=1
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
   changed_when: true

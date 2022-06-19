@@ -1,13 +1,13 @@
 ---
 # This role installs minisign from sources
 - name: Check if minisign is installed
-  command: "minisign -v"
+  ansible.builtin.command: "minisign -v"
   register: minisign_present
   ignore_errors: true
   changed_when: false
 
 - name: Get minisign installed version
-  shell: >
+  ansible.builtin.shell: >
     set -o pipefail &&
     minisign -v | awk '{print $2}'
   args:

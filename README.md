@@ -6,7 +6,7 @@ Installation from [ansible galaxy](https://galaxy.ansible.com/youtous/minisign):
 
 ```yaml
 - name: Install minisign
-  include_role: youtous.minisign
+  ansible.builtin.include_role: youtous.minisign
   vars:
     minisign_version: "0.10" # optional
 ```

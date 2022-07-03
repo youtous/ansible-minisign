@@ -1,22 +1,21 @@
 ---
 # This role installs minisign from sources
 - name: Check if minisign is installed
-  ansible.builtin.command: "minisign -v"
+  ansible.builtin.stat:
+    path: "{{ minisign_path }}"
   register: minisign_present
-  ignore_errors: true
-  changed_when: false
 
 - name: Get minisign installed version
   ansible.builtin.shell: >
     set -o pipefail &&
-    minisign -v | awk '{print $2}'
+    {{ minisign_path }} -v | awk '{print $2}'
   args:
     executable: /bin/bash
-  when: minisign_present is not failed
+  when: minisign_present.stat.exists
   changed_when: false
   register: minisign_current_version
 
 - name: Install minisign
   import_tasks: install.yml
-  when: minisign_present is failed or (minisign_current_version.stdout != minisign_version)
+  when: not minisign_present.stat.exists or (minisign_current_version.stdout != minisign_version)
 ...

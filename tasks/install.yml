@@ -10,10 +10,9 @@
       - pkg-config
 
 - name: Check if minisign is installed
-  ansible.builtin.command: "minisign -v"
+  ansible.builtin.stat:
+    path: "{{ minisign_path }}"
   register: minisign_present
-  ignore_errors: true
-  changed_when: false
 
 - name: Create buid directory
   ansible.builtin.tempfile:
@@ -27,21 +26,21 @@
     dest: "{{ tmp_dir_build.path }}/minisign.tar.gz"
     checksum: "sha512:{{ minisign_version_sha512sum }}"
     mode: u=rw,g=,o=
-  when: minisign_present is failed
+  when: not minisign_present.stat.exists
 
 - name: Download minisign sources and verify it with minisign
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
     mode: u=rw,g=,o=
-  when: minisign_present is not failed
+  when: minisign_present.stat.exists
   with_items:
     - { url: "{{ minisign_download_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz" }
     - { url: "{{ minisign_download_signature_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz.minisig" }
 
 - name: Verify downloaded minisign using minisign
-  ansible.builtin.command: "minisign -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
-  when: minisign_present is not failed
+  ansible.builtin.command: "{{ minisign_path }} -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
+  when: minisign_present.stat.exists
 
 - name: Extract downloaded files
   ansible.builtin.unarchive:

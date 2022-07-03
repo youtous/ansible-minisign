@@ -1,4 +1,5 @@
 ---
+minisign_path: "/usr/local/bin/minisign"
 minisign_release_channel: "https://github.com/jedisct1/minisign/releases/download"
 minisign_archive_channel: "https://github.com/jedisct1/minisign/archive"
 minisign_public_key: "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"

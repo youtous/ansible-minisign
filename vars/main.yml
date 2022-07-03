@@ -1,8 +1,10 @@
 ---
 minisign_release_channel: "https://github.com/jedisct1/minisign/releases/download"
+minisign_archive_channel: "https://github.com/jedisct1/minisign/archive"
 minisign_public_key: "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
 
 # https://github.com/jedisct1/minisign/releases/download/0.8/minisign-0.8.tar.gz
-minisign_download_release_url: "{{ minisign_release_channel }}/{{ minisign_version }}/minisign-{{ minisign_version }}.tar.gz"
+# this url changed for 0.10 https://github.com/jedisct1/minisign/archive0.10.zip
+minisign_download_release_url: "{{ minisign_archive_channel }}/refs/tags/{{ minisign_version }}.tar.gz"
 minisign_download_signature_release_url: "{{ minisign_download_release_url }}.minisig"
 ...

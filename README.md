@@ -1,5 +1,10 @@
 # youtous/ansible-minisign
 
+[![pipeline status](https://gitlab.com/youtous/ansible-minisign/badges/master/pipeline.svg)](https://gitlab.com/youtous/ansible-minisign/-/commits/master)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Licence](https://img.shields.io/github/license/youtous/ansible-minisign)](https://github.com/youtous/ansible-minisign/blob/master/LICENSE)
+
+
 This ansible role permits to easily install or update [minisign](https://jedisct1.github.io/minisign/) on debian like OS.
 
 Installation from [ansible galaxy](https://galaxy.ansible.com/youtous/minisign): `ansible-galaxy install youtous.minisign`
@@ -10,6 +15,10 @@ Installation from [ansible galaxy](https://galaxy.ansible.com/youtous/minisign):
   vars:
     minisign_version: "0.10" # optional
 ```
+
+### Requirements
+
+- ansible-core 2.11+
 
 ### Usage
 
@@ -23,5 +32,6 @@ minisign_version_sha512sum: 'dae9eb52888affd040da832820a5c9e236bbd3f4d320a29868c
 
 ```
 
-### Licence
+### License
+
 MIT

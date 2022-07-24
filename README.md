@@ -2,6 +2,8 @@
 
 [![pipeline status](https://gitlab.com/youtous/ansible-minisign/badges/master/pipeline.svg)](https://gitlab.com/youtous/ansible-minisign/-/commits/master)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![GitHub Repo stars](https://img.shields.io/github/stars/youtous/ansible-minisign?label=✨%20youtous%2Fansible-minisign&style=social)](https://github.com/youtous/ansible-minisign/)
+[![Gitlab Repo](https://img.shields.io/badge/gitlab.com%2Fyoutous%2Fansible--minisign?label=✨%20youtous%2Fansible-minisign&style=social&logo=gitlab)](https://gitlab.com/youtous/ansible-minisign/)
 [![Licence](https://img.shields.io/github/license/youtous/ansible-minisign)](https://github.com/youtous/ansible-minisign/blob/master/LICENSE)
 
 

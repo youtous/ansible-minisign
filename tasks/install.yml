@@ -39,8 +39,10 @@
     - { url: "{{ minisign_download_signature_release_url }}", dest: "{{ tmp_dir_build.path }}/minisign.tar.gz.minisig" }
 
 - name: Verify downloaded minisign using minisign
-  ansible.builtin.command: "{{ minisign_path }} -Vm '{{ tmp_dir_build.path|quote }}/minisign.tar.gz' -P '{{ minisign_public_key|quote }}'"
+  ansible.builtin.command: "{{ minisign_path }} -Vm '{{ tmp_dir_build.path | quote }}/minisign.tar.gz' -P '{{ minisign_public_key | quote }}'"
   when: minisign_present.stat.exists
+  register: cmd_output
+  changed_when: cmd_output.rc != 0
 
 - name: Extract downloaded files
   ansible.builtin.unarchive:
@@ -61,12 +63,12 @@
   changed_when: true
 
 - name: Build minisign | make
-  make:
+  community.general.system.make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | make install
   become: true
-  make:
+  community.general.system.make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
     target: install
 

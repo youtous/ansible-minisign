@@ -16,6 +16,6 @@
   register: minisign_current_version
 
 - name: Install minisign
-  import_tasks: install.yml
+  ansible.builtin.import_tasks: install.yml
   when: not minisign_present.stat.exists or (minisign_current_version.stdout != minisign_version)
 ...

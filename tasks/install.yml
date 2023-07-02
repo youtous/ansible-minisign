@@ -63,12 +63,12 @@
   changed_when: true
 
 - name: Build minisign | make
-  community.general.system.make:
+  community.general.make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
 
 - name: Build minisign | make install
   become: true
-  community.general.system.make:
+  community.general.make:
     chdir: "{{ tmp_dir_build.path }}/minisign-{{ minisign_version }}/build"
     target: install
 

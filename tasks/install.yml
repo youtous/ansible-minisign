@@ -14,7 +14,7 @@
     path: "{{ minisign_path }}"
   register: minisign_present
 
-- name: Create buid directory
+- name: Create build directory
   ansible.builtin.tempfile:
     state: directory
     suffix: build

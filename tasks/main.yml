@@ -3,7 +3,7 @@
 - name: Check if minisign is installed
   ansible.builtin.stat:
     path: "{{ minisign_path }}"
-  register: minisign_present
+  register: minisign_binary_present
 
 - name: Get minisign installed version
   ansible.builtin.shell: >
@@ -11,11 +11,11 @@
     {{ minisign_path }} -v | awk '{print $2}'
   args:
     executable: /bin/bash
-  when: minisign_present.stat.exists
+  when: minisign_binary_present.stat.exists
   changed_when: false
   register: minisign_current_version
 
 - name: Install minisign
+  when: not minisign_binary_present.stat.exists or (minisign_current_version.stdout != minisign_version)
   ansible.builtin.import_tasks: install.yml
-  when: not minisign_present.stat.exists or (minisign_current_version.stdout != minisign_version)
 ...
